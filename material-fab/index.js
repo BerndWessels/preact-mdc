@@ -12,7 +12,6 @@
  */
 import {h, Component} from 'preact';
 import classnames from 'classnames/dedupe';
-import MDCRipple from '../material-ripple';
 
 /**
  * Import local dependencies.
@@ -37,18 +36,6 @@ import '@material/ripple/mdc-ripple.scss';
  */
 export default class Fab extends Component {
 
-  componentDidMount = () => {
-    if (process.env.WEB) {
-      this.ripple = new MDCRipple(this.rippleElement);
-    }
-  };
-
-  componentDidUnmount = () => {
-    if (process.env.WEB) {
-      this.ripple.destroy();
-    }
-  };
-
   render({
            'class': className,
            children,
@@ -56,7 +43,7 @@ export default class Fab extends Component {
            plain,
            mini,
            ...props
-         }, state) {
+         }, state, context) {
 
     const classes = classnames('material-icons mdc-fab', {
       'mdc-fab--plain': plain,

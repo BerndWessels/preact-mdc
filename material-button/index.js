@@ -12,7 +12,6 @@
  */
 import {h, Component} from 'preact';
 import classnames from 'classnames/dedupe';
-import MDCRipple from '../material-ripple';
 
 /**
  * Import local dependencies.
@@ -39,18 +38,6 @@ import '@material/ripple/mdc-ripple.scss';
  */
 export default class Button extends Component {
 
-  componentDidMount = () => {
-    if (process.env.WEB) {
-      this.ripple = new MDCRipple(this.rippleElement);
-    }
-  };
-
-  componentDidUnmount = () => {
-    if (process.env.WEB) {
-      this.ripple.destroy();
-    }
-  };
-
   render({
            'class': className,
            children,
@@ -60,7 +47,7 @@ export default class Button extends Component {
            raised,
            dense,
            ...props
-         }, state) {
+         }, state, context) {
 
     const classes = classnames('mdc-button', {
       'mdc-button--compact': compact,
