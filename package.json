@@ -1,0 +1,30 @@
+{
+  "name": "preact-mdc",
+  "version": "0.1.0",
+  "description": "material design components for preact using material-components-web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BerndWessels/preact-mdc.git"
+  },
+  "keywords": [
+    "preact",
+    "mdc",
+    "material",
+    "design",
+    "components"
+  ],
+  "author": "Bernd Wessels",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BerndWessels/preact-mdc/issues"
+  },
+  "homepage": "https://github.com/BerndWessels/preact-mdc#readme",
+  "peerDependencies": {
+    "material-components-web": "0.8.0",
+    "material-design-icons": "^3.0.0"
+  }
+}
