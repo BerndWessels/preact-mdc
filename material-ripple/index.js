@@ -24,7 +24,7 @@ import '@material/ripple/mdc-ripple.scss';
  * Export the ripple helper.
  */
 export default (e) => {
-  if (!e) {
+  if (!e || !e.getBoundingClientRect) {
     return '';
   }
   let dimensions = e.getBoundingClientRect();
