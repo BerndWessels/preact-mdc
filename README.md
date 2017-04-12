@@ -54,6 +54,11 @@ We try to not use any of the MDC `javascript` code but only use the MDC `sass` s
   - ToolbarSection
   - ToolbarTitle
 
+## Demo
+
+- Here is a [demo project](https://github.com/BerndWessels/preact-mdc-demo) showing all the components and how to use them.
+- Here is a [live demo](https://berndwessels.github.io/preact-mdc-demo/) of that project.
+
 ## Usage
 
 At the moment we directly provide the components written in ES6 as individual modules.
@@ -61,6 +66,41 @@ At the moment we directly provide the components written in ES6 as individual mo
 - Add this library to your project
 
 ` npm install --save preact-mdc`
+
+This requires the following depenencies in your project:
+```json
+    "material-components-web": "0.8.0",
+    "material-design-icons": "^3.0.0",
+```
+
+### ES6 NPM webpack
+
+Since `preact-mdc` components are ES6 components and used directly from the npm package you might need to tweak your `webpack.config`.
+ 
+Here is an example:
+
+```js
+    module: {
+      noParse: /\.min\.js/,
+      rules: [{
+        test: /\.jsx?$/,
+        exclude: [/node_modules(?![\/\\]preact-mdc)/],
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['es2015', {loose: true, modules: false}]
+            ],
+            plugins: [
+              'transform-class-properties',
+              'transform-object-rest-spread',
+              ['transform-react-jsx', {pragma: 'h'}]
+            ]
+          },
+        }]
+      }
+```
+
 
 # Contributing
 
