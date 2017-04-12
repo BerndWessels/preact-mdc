@@ -25,22 +25,16 @@ import '@material/card/mdc-card.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * className: PropTypes.string
- * }
  */
 export default class CardAction extends Component {
   render({
            'class': className,
            children,
            ...props
-         }, state) {
-
+         }, state, context) {
     const classes = classnames('mdc-card__action', className);
-
     return (
-      <Button {...props} class={classes} compact>{children}</Button>
+      <Button class={classes} compact {...props}>{children}</Button>
     );
   }
 }

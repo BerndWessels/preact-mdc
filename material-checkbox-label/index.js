@@ -11,6 +11,7 @@
  * Import dependencies.
  */
 import {h, Component} from 'preact';
+import classnames from 'classnames/dedupe';
 
 /**
  * Import local dependencies.
@@ -19,22 +20,20 @@ import {h, Component} from 'preact';
 /**
  * Import styles.
  */
-import '@material/form-field/mdc-form-field.scss';
+import '@material/checkbox/mdc-checkbox.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * for: PropTypes.string.isRequired,
- * id: PropTypes.string.isRequired
- * }
  */
 export default class CheckboxLabel extends Component {
-  render(props, state) {
-    const {id, children} = this.props;
-    const inputId = this.props['for'];
+  render({
+           'class': className,
+           children,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-checkbox-label', className);
     return (
-      <label className='mdc-checkbox-label' id={id} for={inputId}>
+      <label class={classes} {...props}>
         {children}
       </label>
     )

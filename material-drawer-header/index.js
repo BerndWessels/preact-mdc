@@ -20,20 +20,20 @@ import classnames from 'classnames/dedupe';
 /**
  * Import styles.
  */
-import '@material/card/mdc-card.scss';
+import '@material/drawer/mdc-drawer.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * className: PropTypes.string
- * }
  */
 export default class DrawerHeader extends Component {
-  render({'class': className, children}, state) {
-    let classes = classnames('mdc-temporary-drawer__header', className);
+  render({
+           'class': className,
+           children,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-temporary-drawer__header', className);
     return (
-      <header class={classes}>
+      <header class={classes} {...props}>
         <div class="mdc-temporary-drawer__header-content">{children}</div>
       </header>
     );

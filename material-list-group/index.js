@@ -24,23 +24,16 @@ import '@material/list/mdc-list.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   className: PropTypes.string,
- *   dense: PropTypes: bool,
- *   twoLine: PropTypes: bool,
- *   avatar: PropTypes: bool
- * }
  */
 export default class ListGroup extends Component {
   render({
            'class': className,
            children,
            ...props
-         }, state) {
-    let classes = classnames('mdc-list-group', className);
+         }, state, context) {
+    const classes = classnames('mdc-list-group', className);
     return (
-      <div {...props} class={classes}>{children}</div>
+      <div class={classes} {...props}>{children}</div>
     );
   }
 }

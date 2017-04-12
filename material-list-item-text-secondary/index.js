@@ -24,21 +24,16 @@ import '@material/list/mdc-list.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   className: PropTypes.string,
- *   children: PropTypes: node
- * }
  */
 export default class ListItemTextSecondary extends Component {
   render({
            'class': className,
            children,
            ...props
-         }, state) {
-    let classes = classnames('mdc-list-item__text__secondary', className);
+         }, state, context) {
+    const classes = classnames('mdc-list-item__text__secondary', className);
     return (
-      <span {...props} class={classes}>{children}</span>
+      <span class={classes} {...props}>{children}</span>
     );
   }
 }

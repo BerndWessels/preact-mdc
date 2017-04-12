@@ -24,16 +24,16 @@ import '@material/card/mdc-card.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * className: PropTypes.string
- * }
  */
 export default class Card extends Component {
-  render({'class': className, children}, state) {
-    let classes = classnames('mdc-card', className);
+  render({
+           'class': className,
+           children,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-card', className);
     return (
-      <div class={classes}>{children}</div>
+      <div class={classes} {...props}>{children}</div>
     );
   }
 }

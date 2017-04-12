@@ -24,12 +24,6 @@ import '@material/list/mdc-list.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   className: PropTypes.string,
- *   children: PropTypes: node,
- *   inset: PropTypes: bool
- * }
  */
 export default class ListDivider extends Component {
   render({
@@ -37,12 +31,12 @@ export default class ListDivider extends Component {
            children,
            inset,
            ...props
-         }, state) {
-    let classes = classnames('mdc-list-divider', {
+         }, state, context) {
+    const classes = classnames('mdc-list-divider', {
       'mdc-list-divider--inset': inset
     }, className);
     return (
-      <li role="separator" {...props} class={classes}>{children}</li>
+      <li role="separator" class={classes} {...props}>{children}</li>
     );
   }
 }

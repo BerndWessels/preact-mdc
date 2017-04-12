@@ -12,6 +12,7 @@
  */
 import {h, Component} from 'preact';
 import classnames from 'classnames/dedupe';
+import ripple from '../material-ripple';
 
 /**
  * Import local dependencies.
@@ -21,25 +22,9 @@ import classnames from 'classnames/dedupe';
  * Import styles.
  */
 import '@material/checkbox/mdc-checkbox.scss';
-import '@material/ripple/mdc-ripple.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * id: PropTypes.string,
- * labelId: PropTypes.string,
- * checked: PropTypes.bool,
- * disabled: PropTypes.bool,
- * indeterminate: PropTypes.bool,
- * onChange: PropTypes.func
- * }
- * static defaultProps = {
- * checked: false,
- * disabled: false,
- * indeterminate: false,
- * onChange: () => {}
- * }
  */
 export default class Checkbox extends Component {
 
@@ -48,9 +33,17 @@ export default class Checkbox extends Component {
     super(props);
     this.state = {
       focus: false,
-      ripple: false
+      ripple: false,
+      style: ''
     };
   }
+
+  componentDidMount = () => {
+    setTimeout(()=>{
+      const rippleInstance = ripple(this.root_);
+      this.setState({style: rippleInstance.style});
+    });
+  };
 
   handleFocus = (e) => {
     this.setState({focus: true});
@@ -63,10 +56,11 @@ export default class Checkbox extends Component {
   };
 
   handleChange = (e) => {
-    this.setState({ripple: true});
+    const rippleInstance = ripple(this.root_);
+    this.setState({ripple: true, style: rippleInstance.style});
     setTimeout(() => {
       this.setState({ripple: false});
-    }, 300);
+    }, rippleInstance.duration);
     this.props.onChange && this.props.onChange(e);
   };
 
@@ -80,9 +74,10 @@ export default class Checkbox extends Component {
            ...props
          }, {
            focus,
-           ripple
+           ripple,
+           style
          }, context) {
-    let classes = classnames('mdc-checkbox mdc-ripple-upgraded mdc-ripple-upgraded--unbounded', {
+    const classes = classnames('mdc-checkbox mdc-ripple-upgraded mdc-ripple-upgraded--unbounded', {
       'mdc-checkbox--disabled': disabled,
       'mdc-ripple-upgraded--background-active-fill': ripple,
       'mdc-ripple-upgraded--foreground-activation': ripple,
@@ -91,7 +86,8 @@ export default class Checkbox extends Component {
     }, className);
     return (
       <div class={classes}
-           style="--mdc-ripple-surface-width:40px; --mdc-ripple-surface-height:40px; --mdc-ripple-fg-size:24px; --mdc-ripple-fg-scale:2.77369; --mdc-ripple-left:8px; --mdc-ripple-top:8px;">
+           style={style}
+           ref={e => this.root_ = e}>
         <input class="mdc-checkbox__native-control"
                type="checkbox"
                disabled={disabled}

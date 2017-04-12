@@ -24,23 +24,16 @@ import '@material/list/mdc-list.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   className: PropTypes.string,
- *   dense: PropTypes: bool,
- *   twoLine: PropTypes: bool,
- *   avatar: PropTypes: bool
- * }
  */
 export default class ListGroupHeader extends Component {
   render({
            'class': className,
            children,
            ...props
-         }, state) {
-    let classes = classnames('mdc-list-group__subheader', className);
+         }, state, context) {
+    const classes = classnames('mdc-list-group__subheader', className);
     return (
-      <h3 {...props} class={classes}>{children}</h3>
+      <h3 class={classes} {...props}>{children}</h3>
     );
   }
 }

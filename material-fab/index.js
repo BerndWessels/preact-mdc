@@ -12,6 +12,7 @@
  */
 import {h, Component} from 'preact';
 import classnames from 'classnames/dedupe';
+import ripple from '../material-ripple';
 
 /**
  * Import local dependencies.
@@ -21,20 +22,46 @@ import classnames from 'classnames/dedupe';
  * Import styles.
  */
 import '@material/fab/mdc-fab.scss';
-import '@material/ripple/mdc-ripple.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * class: PropTypes.string,
- * children: PropTypes.node,
- * icon: PropTypes.bool,
- * plain: PropTypes.bool,
- * mini: PropTypes.bool
- * }
  */
 export default class Fab extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      focus: false,
+      ripple: false,
+      style: ''
+    };
+  }
+
+  componentDidMount = () => {
+    setTimeout(() => {
+      const rippleInstance = ripple(this.root_);
+      this.setState({style: rippleInstance.style});
+    });
+  };
+
+  handleFocus = (e) => {
+    this.setState({focus: true});
+    this.props.onFocus && this.props.onFocus(e);
+  };
+
+  handleBlur = (e) => {
+    this.setState({focus: false});
+    this.props.onBlur && this.props.onBlur(e);
+  };
+
+  handleClick = (e) => {
+    const rippleInstance = ripple(this.root_);
+    this.setState({ripple: true, style: rippleInstance.style});
+    setTimeout(() => {
+      this.setState({ripple: false});
+    }, rippleInstance.duration);
+    this.props.onClick && this.props.onClick(e);
+  };
 
   render({
            'class': className,
@@ -42,16 +69,34 @@ export default class Fab extends Component {
            icon,
            plain,
            mini,
+           onFocus,
+           onBlur,
+           onClick,
            ...props
-         }, state, context) {
+         }, {
+           focus,
+           ripple,
+           style
+         }, context) {
 
-    const classes = classnames('material-icons mdc-fab', {
+    const classes = classnames('mdc-fab mdc-ripple-upgraded mdc-ripple-upgraded--unbounded material-icons', {
       'mdc-fab--plain': plain,
-      'mdc-fab--mini': mini
+      'mdc-fab--mini': mini,
+      'mdc-ripple-upgraded--background-active-fill': ripple,
+      'mdc-ripple-upgraded--foreground-activation': ripple,
+      'mdc-ripple-upgraded--foreground-deactivation': !ripple,
+      'mdc-ripple-upgraded--background-focused': focus
     }, className);
 
     return (
-      <button {...props} class={classes} aria-label={icon} ref={e => this.rippleElement = e}>
+      <button class={classes}
+              aria-label={icon}
+              style={style}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              onClick={this.handleClick}
+              {...props}
+              ref={e => this.root_ = e}>
         <span class='mdc-fab__icon'>
           {icon}
         </span>

@@ -12,7 +12,6 @@
  */
 import {h, Component} from 'preact';
 import classnames from 'classnames/dedupe';
-import MDCRipple from '../material-ripple';
 
 /**
  * Import local dependencies.
@@ -22,7 +21,6 @@ import MDCRipple from '../material-ripple';
  * Import styles.
  */
 import '@material/icon-toggle/mdc-icon-toggle.scss';
-import '@material/ripple/mdc-ripple.scss';
 
 /**
  * Create the component.
@@ -31,28 +29,15 @@ class IconToggle extends Component {
 
   constructor() {
     super();
-    this.state = {pressed: false};
+    this.state = {
+      pressed: false
+    };
   }
-
-  componentDidMount = () => {
-    if (process.env.WEB) {
-      this.ripple = new MDCRipple(this.rippleElement);
-      this.ripple.unbounded = true;
-    }
-  };
-
-  componentDidUnmount = () => {
-    if (process.env.WEB) {
-      this.ripple.destroy();
-    }
-  };
 
   handleClick = (e) => {
     let pressed = !this.state.pressed;
     this.setState({pressed: pressed});
-    if(this.props.onClick){
-      this.props.onClick(e, pressed);
-    }
+    this.props.onClick && this.props.onClick(e, pressed);
   };
 
   render({
@@ -69,7 +54,7 @@ class IconToggle extends Component {
            ...props
          }, {
            pressed
-         }) {
+         }, context) {
 
     const classes = classnames('mdc-icon-toggle material-icons', {
       'mdc-icon-toggle--disabled': disabled,
@@ -84,7 +69,9 @@ class IconToggle extends Component {
          aria-label={pressed ? labelPressed : label}
          tabindex="0"
          onClick={this.handleClick}
-         ref={e => this.rippleElement = e}>
+         ref={e => this.rippleElement = e}
+         {...props}
+      >
         {pressed ? iconPressed : icon}
       </i>
     );

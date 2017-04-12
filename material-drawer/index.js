@@ -24,16 +24,6 @@ import '@material/drawer/mdc-drawer.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * class: PropTypes.string,
- * children: PropTypes.node,
- * compact: PropTypes.bool,
- * primary: PropTypes.bool,
- * accent: PropTypes.bool,
- * raised: PropTypes.bool,
- * dense: PropTypes.bool
- * }
  */
 export default class Drawer extends Component {
   render({
@@ -42,8 +32,8 @@ export default class Drawer extends Component {
            open,
            children,
            ...props
-         }, state) {
-    let classes = classnames({
+         }, state, context) {
+    const classes = classnames({
       'mdc-permanent-drawer': permanent,
       'mdc-temporary-drawer': !permanent,
       'mdc-temporary-drawer--animating': !permanent,
@@ -51,13 +41,13 @@ export default class Drawer extends Component {
     }, className);
     if (permanent) {
       return (
-        <div {...props} class={classes}>
+        <div class={classes} {...props}>
           {children}
         </div>
       );
     } else {
       return (
-        <aside {...props} class={classes}>
+        <aside class={classes} {...props}>
           <div class="mdc-temporary-drawer__drawer">{children}</div>
         </aside>
       );

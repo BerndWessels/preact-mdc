@@ -24,23 +24,23 @@ import '@material/card/mdc-card.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * className: PropTypes.string,
- * x1dot5: PropTypes.bool,
- * x2: PropTypes.bool,
- * x3: PropTypes.bool
- * }
  */
 export default class CardMediaItem extends Component {
-  render({'class': className, x1dot5, x2, x3, children}, state) {
-    let classes = classnames('mdc-card__media-item', {
+  render({
+           'class': className,
+           children,
+           x1dot5,
+           x2,
+           x3,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-card__media-item', {
       'mdc-card__media-item--1dot5x': x1dot5,
       'mdc-card__media-item--2x': x2,
       'mdc-card__media-item--3x': x3
     }, className);
     return (
-      <section class={classes}>{children}</section>
+      <section class={classes} {...props}>{children}</section>
     );
   }
 }

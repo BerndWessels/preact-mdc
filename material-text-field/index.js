@@ -24,28 +24,11 @@ import '@material/textfield/mdc-textfield.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * id: PropTypes.string,
- * labelId: PropTypes.string,
- * checked: PropTypes.bool,
- * disabled: PropTypes.bool,
- * indeterminate: PropTypes.bool,
- * onChange: PropTypes.func
- * }
- * static defaultProps = {
- * checked: false,
- * disabled: false,
- * indeterminate: false,
- * onChange: () => {}
- * }
  */
 export default class Checkbox extends Component {
 
-  // Initialize local component state.
   constructor(props) {
     super(props);
-    this.refs = {};
     this.state = {
       focused: false,
       valueInternal: this.props.value,
@@ -53,7 +36,6 @@ export default class Checkbox extends Component {
     };
   }
 
-  // Here we synchronize the internal state of the UI component based on what the user has specified.
   componentWillReceiveProps(nextProps) {
     let {value} = this.props;
     if (nextProps.value !== value) {
@@ -61,20 +43,20 @@ export default class Checkbox extends Component {
     }
   }
 
-  handleFocusInput = () => {
+  handleFocus = (e) => {
     this.setState({focused: true});
+    this.props.onFocus && this.props.onFocus(e);
   };
 
-  handleBlurInput = (e) => {
+  handleBlur = (e) => {
     console.log(e.target.validity); // TODO: find a way to match this with custom provided helptext.
     this.setState({focused: false});
+    this.props.onBlur && this.props.onBlur(e);
   };
 
-  handleChangeInput = (e) => {
+  handleChange = (e) => {
     this.setState({valueInternal: e.target.value, validInternal: e.target.checkValidity()});
-    if (this.props.onChange) {
-      this.props.onChange(e);
-    }
+    this.props.onChange && this.props.onChange(e);
   };
 
   render({
@@ -89,7 +71,11 @@ export default class Checkbox extends Component {
            pattern,
            helpText,
            helpTextPersistent,
-           helpTextValidation
+           helpTextValidation,
+           onFocus,
+           onBlur,
+           onChange,
+           ...props
          }, {
            focused,
            valueInternal,
@@ -121,9 +107,10 @@ export default class Checkbox extends Component {
                  required={required}
                  pattern={pattern}
                  aria-controls={`${idInternal}-validation-msg`}
-                 onFocus={this.handleFocusInput}
-                 onBlur={this.handleBlurInput}
-                 onChange={this.handleChangeInput}
+                 onFocus={this.handleFocus}
+                 onBlur={this.handleBlur}
+                 onChange={this.handleChange}
+                 {...props}
           />
           <span class={classesLabel}>{label}</span>
         </label>

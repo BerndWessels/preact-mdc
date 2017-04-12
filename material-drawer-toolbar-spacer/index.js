@@ -24,20 +24,20 @@ import '@material/drawer/mdc-drawer.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   className: PropTypes.string,
- *   permanent: PropTypes.bool
- * }
  */
 export default class DrawerToolbarSpacer extends Component {
-  render({'class': className, permanent, children}, state) {
-    let classes = classnames({
+  render({
+           'class': className,
+           children,
+           permanent,
+          ...props
+         }, state, context) {
+    const classes = classnames({
       'mdc-permanent-drawer__toolbar-spacer': permanent,
       'mdc-temporary-drawer__toolbar-spacer': !permanent
     }, className);
     return (
-      <div class={classes}>{children}</div>
+      <div class={classes} {...props}>{children}</div>
     );
   }
 }

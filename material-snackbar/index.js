@@ -24,11 +24,6 @@ import '@material/snackbar/mdc-snackbar.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * }
- * static defaultProps = {
- * }
  */
 export default class Snackbar extends Component {
 
@@ -40,14 +35,14 @@ export default class Snackbar extends Component {
            multiline,
            actionOnBottom,
            ...props
-         }, state) {
-    let classes = classnames('mdc-snackbar', {
+         }, state, context) {
+    const classes = classnames('mdc-snackbar', {
       'mdc-snackbar--active': active,
       'mdc-snackbar--multiline': multiline,
       'mdc-snackbar--action-on-bottom': actionOnBottom,
     }, className);
     return (
-      <div {...props} class={classes} aria-live="assertive" aria-atomic="true" aria-hidden={!active}>
+      <div class={classes} aria-live="assertive" aria-atomic="true" aria-hidden={!active} {...props}>
         <div class="mdc-snackbar__text">{text}</div>
         <div class="mdc-snackbar__action-wrapper">
           {children}

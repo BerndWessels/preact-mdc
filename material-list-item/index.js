@@ -24,12 +24,6 @@ import '@material/list/mdc-list.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   className: PropTypes.string,
- *   children: PropTypes: node,
- *   links: PropTypes: bool
- * }
  */
 export default class ListItem extends Component {
   render({
@@ -37,8 +31,8 @@ export default class ListItem extends Component {
            children,
            link,
            ...props
-         }, state) {
-    let classes = classnames('mdc-list-item', className);
-    return link ? <a {...props} class={classes}>{children}</a> : <li {...props} class={classes}>{children}</li>;
+         }, state, context) {
+    const classes = classnames('mdc-list-item', className);
+    return link ? <a class={classes} {...props}>{children}</a> : <li class={classes} {...props}>{children}</li>;
   }
 }

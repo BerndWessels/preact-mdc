@@ -20,25 +20,23 @@ import classnames from 'classnames/dedupe';
 /**
  * Import styles.
  */
-import '@material/checkbox/mdc-checkbox.scss';
+import '@material/form-field/mdc-form-field.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * alignEnd: PropTypes.bool
- * }
  */
 export default class FormField extends Component {
-  render({alignEnd, className, children}, state) {
-    const baseClasses = {
-      'mdc-form-field': true
-    };
-    const classes = classnames(baseClasses, {
+  render({
+           'class': className,
+           children,
+           alignEnd,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-form-field', {
       'mdc-form-field--align-end': alignEnd
     }, className);
     return (
-      <div className={classes}>
+      <div className={classes} {...props}>
         {children}
       </div>
     );

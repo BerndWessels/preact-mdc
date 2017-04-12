@@ -24,21 +24,21 @@ import '@material/toolbar/mdc-toolbar.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   class: PropTypes.string,
- *   start: PropTypes.bool,
- *   end: PropTypes.bool
- * }
  */
 export default class ToolbarSection extends Component {
-  render({'class': className, start, end, children}, state) {
-    let classes = classnames('mdc-toolbar__section', {
+  render({
+           'class': className,
+           start,
+           end,
+           children,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-toolbar__section', {
       'mdc-toolbar__section--align-start': start,
       'mdc-toolbar__section--align-end': end
     }, className);
     return (
-      <section class={classes}>{children}</section>
+      <section class={classes} {...props}>{children}</section>
     );
   }
 }

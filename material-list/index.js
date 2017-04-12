@@ -24,13 +24,6 @@ import '@material/list/mdc-list.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   className: PropTypes.string,
- *   dense: PropTypes: bool,
- *   twoLine: PropTypes: bool,
- *   avatar: PropTypes: bool
- * }
  */
 export default class List extends Component {
   render({
@@ -41,12 +34,12 @@ export default class List extends Component {
            twoLine,
            avatar,
            ...props
-         }, state) {
-    let classes = classnames('mdc-list', {
+         }, state, context) {
+    const classes = classnames('mdc-list', {
       'mdc-list--dense': dense,
       'mdc-list--two-line': twoLine,
       'mdc-list--avatar-list': avatar
     }, className);
-    return links ? <div {...props} class={classes}>{children}</div> : <ul {...props} class={classes}>{children}</ul>;
+    return links ? <div class={classes} {...props}>{children}</div> : <ul class={classes} {...props}>{children}</ul>;
   }
 }

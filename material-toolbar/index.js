@@ -24,19 +24,19 @@ import '@material/toolbar/mdc-toolbar.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   class: PropTypes.string,
- *   fixed: PropTypes.bool
- * }
  */
 export default class Toolbar extends Component {
-  render({'class': className, fixed, children}, state) {
-    let classes = classnames('mdc-toolbar', {
+  render({
+           'class': className,
+           children,
+           fixed,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-toolbar', {
       'mdc-toolbar--fixed': fixed
     }, className);
     return (
-      <header class={classes}>{children}</header>
+      <header class={classes} {...props}>{children}</header>
     );
   }
 }

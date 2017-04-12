@@ -24,16 +24,16 @@ import '@material/toolbar/mdc-toolbar.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- *   class: PropTypes.string
- * }
  */
 export default class ToolbarRow extends Component {
-  render({'class': className, children}, state) {
-    let classes = classnames('mdc-toolbar__row', className);
+  render({
+           'class': className,
+           children,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-toolbar__row', className);
     return (
-      <div class={classes}>{children}</div>
+      <div class={classes} {...props}>{children}</div>
     );
   }
 }

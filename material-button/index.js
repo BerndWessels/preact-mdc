@@ -12,6 +12,7 @@
  */
 import {h, Component} from 'preact';
 import classnames from 'classnames/dedupe';
+import ripple from '../material-ripple';
 
 /**
  * Import local dependencies.
@@ -21,22 +22,46 @@ import classnames from 'classnames/dedupe';
  * Import styles.
  */
 import '@material/button/mdc-button.scss';
-import '@material/ripple/mdc-ripple.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * class: PropTypes.string,
- * children: PropTypes.node,
- * compact: PropTypes.bool,
- * primary: PropTypes.bool,
- * accent: PropTypes.bool,
- * raised: PropTypes.bool,
- * dense: PropTypes.bool
- * }
  */
 export default class Button extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      focus: false,
+      ripple: false,
+      style: ''
+    };
+  }
+
+  componentDidMount = () => {
+    setTimeout(() => {
+      const rippleInstance = ripple(this.root_);
+      this.setState({style: rippleInstance.style});
+    });
+  };
+
+  handleFocus = (e) => {
+    this.setState({focus: true});
+    this.props.onFocus && this.props.onFocus(e);
+  };
+
+  handleBlur = (e) => {
+    this.setState({focus: false});
+    this.props.onBlur && this.props.onBlur(e);
+  };
+
+  handleClick = (e) => {
+    const rippleInstance = ripple(this.root_);
+    this.setState({ripple: true, style: rippleInstance.style});
+    setTimeout(() => {
+      this.setState({ripple: false});
+    }, rippleInstance.duration);
+    this.props.onClick && this.props.onClick(e);
+  };
 
   render({
            'class': className,
@@ -46,19 +71,36 @@ export default class Button extends Component {
            accent,
            raised,
            dense,
+           onFocus,
+           onBlur,
+           onClick,
            ...props
-         }, state, context) {
+         }, {
+           focus,
+           ripple,
+           style
+         }, context) {
 
-    const classes = classnames('mdc-button', {
+    const classes = classnames('mdc-button mdc-ripple-upgraded mdc-ripple-upgraded--unbounded', {
       'mdc-button--compact': compact,
       'mdc-button--primary': primary,
       'mdc-button--accent': accent,
       'mdc-button--raised': raised,
-      'mdc-button--dense': dense
+      'mdc-button--dense': dense,
+      'mdc-ripple-upgraded--background-active-fill': ripple,
+      'mdc-ripple-upgraded--foreground-activation': ripple,
+      'mdc-ripple-upgraded--foreground-deactivation': !ripple,
+      'mdc-ripple-upgraded--background-focused': focus
     }, className);
 
     return (
-      <button {...props} class={classes} ref={e => this.rippleElement = e}>
+      <button class={classes}
+              style={style}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              onClick={this.handleClick}
+              {...props}
+              ref={e => this.root_ = e}>
         {children}
       </button>
     );

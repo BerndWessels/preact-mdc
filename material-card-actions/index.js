@@ -24,19 +24,19 @@ import '@material/card/mdc-card.scss';
 
 /**
  * Create the component.
- *
- * static propTypes = {
- * className: PropTypes.string,
- * vertical: PropTypes.bool
- * }
  */
 export default class CardActions extends Component {
-  render({'class': className, vertical, children}, state) {
-    let classes = classnames('mdc-card__actions', {
+  render({
+           'class': className,
+           children,
+           vertical,
+           ...props
+         }, state, context) {
+    const classes = classnames('mdc-card__actions', {
       'mdc-card__actions--vertical': vertical
     }, className);
     return (
-      <section class={classes}>{children}</section>
+      <section class={classes} {...props}>{children}</section>
     );
   }
 }
